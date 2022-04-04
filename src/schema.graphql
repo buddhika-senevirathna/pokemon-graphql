@@ -1,0 +1,47 @@
+type Query {
+  info: String!
+  pokemon(filter: String, weightfrom: Float, weightto: Float, heightfrom: Float, heightto: Float, skip: Int, take: Int, orderBy: PokemonOrderByInput): [Pokemon!]!
+  check: User!
+}
+
+type Mutation {
+    pokemon(name: String!, height: Float!, weight: Float!, imgUrl: String!, description: String!):Pokemon
+    patch_pokemons(id:ID!, name: String!, height: Float!, weight: Float!, imgUrl: String!, description: String!):Pokemon
+    delete_pokemon(id: ID!):Pokemon
+    signup(email: String!, password: String!, name: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
+}
+
+type Pokemon {
+  id: ID!
+  name: String!
+  height: Float!
+  weight: Float!
+  imgUrl: String!
+  description: String!
+  createdBy: User
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  pokemons: [Pokemon!]!
+}
+
+input PokemonOrderByInput {
+  name: Sort
+  height: Sort
+  weight: Sort
+  createdAt: Sort
+}
+
+enum Sort {
+  asc
+  desc
+}
